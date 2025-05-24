@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/typeit@8.8.7/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-rose-300">
+    <div class="w-screen h-screen flex flex-col justify-center items-center opacity-0 transition-opacity duration-1000" id="container">
+        <img class="w-[80%] hover:scale-90 ease-in duration-200" src="img/kado.png" alt="kado" id="kado">
+        <p class="text-white text-3xl mt-2 font-bold italic" id="txt_open">Open the gift</p>
+
+        <img src="https://feeldreams.github.io/bunga.gif" alt="stiker1" class="hidden w-[80%] mt-4 opacity-0" id="stiker1">
+        <img src="https://media.tenor.com/4Ijycn6xFzUAAAAj/mochi-blue-roses.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker2" />
+        <img src="https://media.tenor.com/snFoLI-S9CQAAAAj/milk-and-mocha.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker3" />
+        <img src="https://feeldreams.github.io/emawh.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker4" />
+        <img src="https://feeldreams.github.io/pandacoklat.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker5" />
+        <p class="text-white text-2xl text-center px-5 py-3 font-semibold" id="txt1"></p>
+        <button type="button" id="btn1" class="py-3 px-7 bg-pink-700 text-white hover:bg-pink-800 rounded-full opacity-0 transition-opacity duration-1000">Next</button>
+        
+    </div>
+
+    <script>
+        
+        
+
+        const audio = new Audio("love.mp3");
+        
+        async function pesan1() {
+            await Swal.fire("Do you know what makes today extra special?");
+            await Swal.fire("It’s your birthday!");
+            await document.getElementById("container").classList.remove("opacity-0");
+            await document.getElementById("container").classList.add("opacity-100");
+        }
+        pesan1();
+        
+        document.getElementById("kado").onclick = function(){
+           kado.style = "transition: all .8s ease; transform: scale(10); opacity:0"; 
+           txt_open.style = "transition: all .2s ease; opacity:0"
+           audio.play();
+           setTimeout(pesan2, 1000)
+        }
+
+        function tampilBtn() {
+            const btn1 = document.getElementById("btn1");
+            btn1.classList.remove("opacity-0");
+        }
+        function pesan2() {
+            tampilstiker();
+            new TypeIt("#txt1", {
+                speed: 90,
+                waitUntilVisible: true,
+                afterComplete: () => {
+            tampilSwal(); // Hanya muncul setelah semua animasi selesai
+        }
+            })
+            .type("Happy New Year!", { delay: 500 })
+            .delete(9, { delay: 800 })
+            .type("Birthday!", { delay: 2000 })
+            .delete(999, { delay: 1000 })
+            .type("Today, I wish you a year filled with laughter, love, and unforgettable moments.", { delay: 2000 }) 
+            .delete(999, { delay: 100 })
+            .type("Remember, you deserve every happiness in the world.", { delay: 1000 }) 
+            .type(" Celebrate big and enjoy every moment!", { delay: 3500 })
+            .go();
+        }
+
+        async function tampilstiker() {
+            // Sembunyikan kado dan teks
+            document.getElementById("kado").classList.add("hidden");
+            document.getElementById("txt_open").classList.add("hidden");
+
+            // Ambil semua elemen gambar
+            const images = [
+                document.getElementById("stiker1"),
+                document.getElementById("stiker2"),
+                document.getElementById("stiker4"),
+                document.getElementById("stiker5"),
+            ];
+
+            while (true) {
+                for (let img of images) {
+                    img.classList.remove("hidden");
+                    img.classList.add("opacity-0", "transition-opacity", "duration-1000");
+
+                    // Fade-in
+                    await new Promise(resolve => requestAnimationFrame(() => {
+                        img.classList.remove("opacity-0");
+                        img.classList.add("opacity-100");
+                        setTimeout(resolve, 2000); // tampil 2 detik
+                    }));
+
+
+                    await new Promise(resolve => setTimeout(() => {
+                        img.classList.add("hidden");
+                        resolve();
+                    }, 1000)); // waktu fade-out
+                }
+            }
+        }
+
+        function tampilSwal() {
+            Swal.fire({
+                title: "Happy Birthday!",
+                text: "May your day be filled with joy and laughter.",
+                imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzJvOHJrMDZrandkZjVhYW1jbjlwaGlnamZ2cGlscG1xMmxvZWx2eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6WFScxN6fi95z3YVQD/giphy.gif",
+                imageWidth: 400,
+                imageHeight: 400,
+                imageAlt: "Birthday Image",
+                confirmButtonText: "Thank you!"
+            })
+        };
+
+    </script>
+</body>
+</html>
