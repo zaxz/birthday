@@ -1,119 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Birthday</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/typeit@8.8.7/dist/index.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body class="bg-rose-300">
+  </head>
+  <body class="bg-rose-300">
     <div class="w-screen h-screen flex flex-col justify-center items-center opacity-0 transition-opacity duration-1000" id="container">
-        <img class="w-[80%] hover:scale-90 ease-in duration-200" src="img/kado.png" alt="kado" id="kado">
-        <p class="text-white text-3xl mt-2 font-bold italic" id="txt_open">Open the gift</p>
+      <img class="w-[80%] hover:scale-90 ease-in duration-200" src="img/kado.png" alt="kado" id="kado" />
+      <p class="text-white text-3xl mt-2 font-bold italic" id="txt_open">Open the gift</p>
 
-        <img src="https://feeldreams.github.io/bunga.gif" alt="stiker1" class="hidden w-[80%] mt-4 opacity-0" id="stiker1">
-        <img src="https://media.tenor.com/4Ijycn6xFzUAAAAj/mochi-blue-roses.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker2" />
-        <img src="https://media.tenor.com/snFoLI-S9CQAAAAj/milk-and-mocha.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker3" />
-        <img src="https://feeldreams.github.io/emawh.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker4" />
-        <img src="https://feeldreams.github.io/pandacoklat.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker5" />
-        <p class="text-white text-2xl text-center px-5 py-3 font-semibold" id="txt1"></p>
-        <button type="button" id="btn1" class="py-3 px-7 bg-pink-700 text-white hover:bg-pink-800 rounded-full opacity-0 transition-opacity duration-1000">Next</button>
-        
+      <img src="https://feeldreams.github.io/bunga.gif" alt="stiker1" class="hidden w-[80%] mt-4 opacity-0" id="stiker1" />
+      <img src="https://media.tenor.com/4Ijycn6xFzUAAAAj/mochi-blue-roses.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker2" />
+      <img src="https://media.tenor.com/snFoLI-S9CQAAAAj/milk-and-mocha.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker3" />
+      <img src="https://feeldreams.github.io/emawh.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker4" />
+      <img src="https://feeldreams.github.io/pandacoklat.gif" class="hidden w-[80%] mt-4 opacity-0" id="stiker5" />
+      <p class="text-white text-2xl text-center px-5 py-3 font-semibold" id="txt1"></p>
+    </div>
+
+    <div class="w-screen h-screen hidden flex-col justify-center items-center" id="hbd">
+      <div class="absolute">
+        <h1 class="text-white font-bold text-7xl text-center">
+          HAPPY <br />
+          BIRTHDAY <br />
+          DARA
+        </h1>
+        <p class="text-white font-bold text-2xl mt-8 text-center">From all 505</p>
+      </div>
+      <canvas class="overflow-hidden w-full" id="canvas"></canvas>
     </div>
 
     <script>
-        
-        
+      const audio = new Audio("love.mp3");
 
-        const audio = new Audio("love.mp3");
-        
-        async function pesan1() {
-            await Swal.fire("Do you know what makes today extra special?");
-            await Swal.fire("It’s your birthday!");
-            await document.getElementById("container").classList.remove("opacity-0");
-            await document.getElementById("container").classList.add("opacity-100");
-        }
-        pesan1();
-        
-        document.getElementById("kado").onclick = function(){
-           kado.style = "transition: all .8s ease; transform: scale(10); opacity:0"; 
-           txt_open.style = "transition: all .2s ease; opacity:0"
-           audio.play();
-           setTimeout(pesan2, 1000)
-        }
+      async function pesan1() {
+        await Swal.fire("Do you know what makes today extra special?");
+        await Swal.fire("It’s your birthday!");
+        await document.getElementById("container").classList.remove("opacity-0");
+        await document.getElementById("container").classList.add("opacity-100");
+      }
+      pesan1();
 
-        function tampilBtn() {
-            const btn1 = document.getElementById("btn1");
-            btn1.classList.remove("opacity-0");
-        }
-        function pesan2() {
-            tampilstiker();
-            new TypeIt("#txt1", {
-                speed: 90,
-                waitUntilVisible: true,
-                afterComplete: () => {
+      document.getElementById("kado").onclick = function () {
+        kado.style = "transition: all .8s ease; transform: scale(10); opacity:0";
+        txt_open.style = "transition: all .2s ease; opacity:0";
+        audio.play();
+        setTimeout(pesan2, 1000);
+      };
+
+      function tampilBtn() {
+        const btn1 = document.getElementById("btn1");
+        btn1.classList.remove("opacity-0");
+      }
+      function pesan2() {
+        tampilstiker();
+        new TypeIt("#txt1", {
+          speed: 90,
+          waitUntilVisible: true,
+          afterComplete: () => {
             tampilSwal(); // Hanya muncul setelah semua animasi selesai
+          },
+        })
+          .type("Happy New Year!", { delay: 500 })
+          .delete(9, { delay: 800 })
+          .type("Birthday, Dara!", { delay: 2000 })
+          .delete(999, { delay: 1000 })
+          .type("Today, We wish you a year filled with laughter, love, and unforgettable moments.", { delay: 2000 })
+          .delete(999, { delay: 100 })
+          .type("Remember, you deserve every happiness in the world.", { delay: 1000 })
+          .type(" Celebrate big and enjoy every moment!", { delay: 3500 })
+          .go();
+      }
+
+      async function tampilstiker() {
+        // Sembunyikan kado dan teks
+        document.getElementById("kado").classList.add("hidden");
+        document.getElementById("txt_open").classList.add("hidden");
+
+        // Ambil semua elemen gambar
+        const images = [document.getElementById("stiker1"), document.getElementById("stiker2"), document.getElementById("stiker5")];
+
+        while (true) {
+          for (let img of images) {
+            img.classList.remove("hidden");
+            img.classList.add("opacity-0", "transition-opacity", "duration-1000");
+
+            await new Promise((resolve) =>
+              requestAnimationFrame(() => {
+                img.classList.remove("opacity-0");
+                img.classList.add("opacity-100");
+                setTimeout(resolve, 2000);
+              })
+            );
+
+            await new Promise((resolve) =>
+              setTimeout(() => {
+                img.classList.add("hidden");
+                resolve();
+              }, 1000)
+            ); // waktu fade-out
+          }
         }
-            })
-            .type("Happy New Year!", { delay: 500 })
-            .delete(9, { delay: 800 })
-            .type("Birthday!", { delay: 2000 })
-            .delete(999, { delay: 1000 })
-            .type("Today, I wish you a year filled with laughter, love, and unforgettable moments.", { delay: 2000 }) 
-            .delete(999, { delay: 100 })
-            .type("Remember, you deserve every happiness in the world.", { delay: 1000 }) 
-            .type(" Celebrate big and enjoy every moment!", { delay: 3500 })
-            .go();
+      }
+
+      function tampilSwal() {
+        Swal.fire({
+          title: "Happy Birthday!",
+          text: "May your day be filled with joy and laughter.",
+          imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzJvOHJrMDZrandkZjVhYW1jbjlwaGlnamZ2cGlscG1xMmxvZWx2eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6WFScxN6fi95z3YVQD/giphy.gif",
+          imageWidth: 400,
+          imageHeight: 400,
+          imageAlt: "Birthday Image",
+          confirmButtonText: "Thank you!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            tampilConfetti();
+          }
+        });
+      }
+
+      function tampilConfetti() {
+        let container = document.getElementById("container");
+        container.classList.remove("opacity-100");
+        container.classList.add("opacity-0");
+        container.classList.add("hidden");
+        document.getElementById("hbd").classList.remove("hidden");
+        document.getElementById("hbd").classList.add("flex");
+
+        let W = window.innerWidth;
+        let H = window.innerHeight;
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+        const maxConfettis = 150;
+        const particles = [];
+
+        const possibleColors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Gold", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"];
+
+        function randomFromTo(from, to) {
+          return Math.floor(Math.random() * (to - from + 1) + from);
         }
 
-        async function tampilstiker() {
-            // Sembunyikan kado dan teks
-            document.getElementById("kado").classList.add("hidden");
-            document.getElementById("txt_open").classList.add("hidden");
+        function confettiParticle() {
+          this.x = Math.random() * W; // x
+          this.y = Math.random() * H - H; // y
+          this.r = randomFromTo(11, 33); // radius
+          this.d = Math.random() * maxConfettis + 11;
+          this.color = possibleColors[Math.floor(Math.random() * possibleColors.length)];
+          this.tilt = Math.floor(Math.random() * 33) - 11;
+          this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+          this.tiltAngle = 0;
 
-            // Ambil semua elemen gambar
-            const images = [
-                document.getElementById("stiker1"),
-                document.getElementById("stiker2"),
-                document.getElementById("stiker4"),
-                document.getElementById("stiker5"),
-            ];
+          this.draw = function () {
+            context.beginPath();
+            context.lineWidth = this.r / 2;
+            context.strokeStyle = this.color;
+            context.moveTo(this.x + this.tilt + this.r / 3, this.y);
+            context.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 5);
+            return context.stroke();
+          };
+        }
 
-            while (true) {
-                for (let img of images) {
-                    img.classList.remove("hidden");
-                    img.classList.add("opacity-0", "transition-opacity", "duration-1000");
+        function Draw() {
+          const results = [];
 
-                    // Fade-in
-                    await new Promise(resolve => requestAnimationFrame(() => {
-                        img.classList.remove("opacity-0");
-                        img.classList.add("opacity-100");
-                        setTimeout(resolve, 2000); // tampil 2 detik
-                    }));
+          // Magical recursive functional love
+          requestAnimationFrame(Draw);
 
+          context.clearRect(0, 0, W, window.innerHeight);
 
-                    await new Promise(resolve => setTimeout(() => {
-                        img.classList.add("hidden");
-                        resolve();
-                    }, 1000)); // waktu fade-out
-                }
+          for (var i = 0; i < maxConfettis; i++) {
+            results.push(particles[i].draw());
+          }
+
+          let particle = {};
+          let remainingFlakes = 0;
+          for (var i = 0; i < maxConfettis; i++) {
+            particle = particles[i];
+
+            particle.tiltAngle += particle.tiltAngleIncremental;
+            particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
+            particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
+
+            if (particle.y <= H) remainingFlakes++;
+
+            // If a confetti has fluttered out of view,
+            // bring it back to above the viewport and let if re-fall.
+            if (particle.x > W + 30 || particle.x < -30 || particle.y > H) {
+              particle.x = Math.random() * W;
+              particle.y = -30;
+              particle.tilt = Math.floor(Math.random() * 10) - 20;
             }
+          }
+
+          return results;
         }
 
-        function tampilSwal() {
-            Swal.fire({
-                title: "Happy Birthday!",
-                text: "May your day be filled with joy and laughter.",
-                imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzJvOHJrMDZrandkZjVhYW1jbjlwaGlnamZ2cGlscG1xMmxvZWx2eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6WFScxN6fi95z3YVQD/giphy.gif",
-                imageWidth: 400,
-                imageHeight: 400,
-                imageAlt: "Birthday Image",
-                confirmButtonText: "Thank you!"
-            })
-        };
+        window.addEventListener(
+          "resize",
+          function () {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          },
+          false
+        );
 
+        // Push new confetti objects to `particles[]`
+        for (var i = 0; i < maxConfettis; i++) {
+          particles.push(new confettiParticle());
+        }
+
+        // Initialize
+        canvas.width = W;
+        canvas.height = H;
+        Draw();
+      }
     </script>
-</body>
+  </body>
 </html>
